@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pretest_2/app/data/model/profile_model.dart';
 import 'package:pretest_2/app/themes/app_font.dart';
 
 import '../controllers/home_controller.dart';
@@ -21,7 +20,6 @@ class HomeView extends GetView<HomeController> {
           future: controller.getProfileModel(),
           builder: (_, snapshot) {
             var dataProfile = snapshot.data; //dataProfile.results[0].name.first
-            // var dataProfileLocation = snapshot.data;
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -42,12 +40,15 @@ class HomeView extends GetView<HomeController> {
                       Row(
                         children: [
                           CircleAvatar(
-                            // Add an avatar image if desired
                             backgroundColor: Colors.white,
                             child: CachedNetworkImage(
-                                imageUrl:
-                                    "${dataProfile?.results[0].picture.large}"
-                                        .toString()),
+                              imageUrl:
+                                  "${dataProfile?.results[0].picture.large}",
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
                           ),
                           const SizedBox(width: 16.0),
                           Column(
@@ -72,19 +73,24 @@ class HomeView extends GetView<HomeController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              // Launch website
-                            },
-                            icon: const Icon(Icons.link),
-                            label: const Text("website"),
+                          Flexible(
+                            child: TextButton.icon(
+                              onPressed: () {
+                                // Launch website
+                              },
+                              icon: const Icon(Icons.link),
+                              label:
+                                  const Text("https://linktr.ee/BangPutra32"),
+                            ),
                           ),
-                          TextButton.icon(
-                            onPressed: () {
-                              // Launch email app
-                            },
-                            icon: const Icon(Icons.email),
-                            label: const Text("email"),
+                          Flexible(
+                            child: TextButton.icon(
+                              onPressed: () {
+                                // Launch email app
+                              },
+                              icon: const Icon(Icons.email),
+                              label: const Text("danaperdanaputra32@gmail.com"),
+                            ),
                           ),
                         ],
                       ),
@@ -96,7 +102,7 @@ class HomeView extends GetView<HomeController> {
                               // Launch phone app
                             },
                             icon: const Icon(Icons.phone),
-                            label: const Text("phone"),
+                            label: const Text("085800445350"),
                           ),
                           // Text("${dataProfile?.results[0].city}"),
                         ],
